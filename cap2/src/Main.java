@@ -12,8 +12,8 @@ public class Main {
         System.out.println("22/4 simplificado es: " + simpl);
 
         FraccionTDA[] fracciones = {
-                new Fraccion(2, 3),
                 new Fraccion(5, 6),
+                new Fraccion(2, 3),
                 new Fraccion(6, 7),
                 new Fraccion(3, 4)
         };
