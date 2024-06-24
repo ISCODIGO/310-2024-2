@@ -1,18 +1,28 @@
 package empleado;
 
 public class EmpleadoComision extends Empleado {
-    public double getRatioPorVenta() {
-        return ratioPorVenta;
+    private double porcentajePorVenta;
+    private double ventaProcesada;
+
+    public double getVentaProcesada() {
+        return ventaProcesada;
     }
 
-    public void setRatioPorVenta(double ratioPorVenta) {
-        this.ratioPorVenta = ratioPorVenta;
+    public void setVentaProcesada(double ventaProcesada) {
+        this.ventaProcesada = ventaProcesada;
     }
 
-    private double ratioPorVenta;
+    public double getPorcentajePorVenta() {
+        return porcentajePorVenta;
+    }
 
-    public EmpleadoComision(String nombre, String cargo, String departamento, double salario, double ratio) {
-        super(nombre, cargo, departamento, salario);
+    public void setPorcentajePorVenta(double porcentajePorVenta) {
+        this.porcentajePorVenta = porcentajePorVenta;
+    }
+
+    public EmpleadoComision(String nombre, String cargo, String departamento, double ratio) {
+        super(nombre, cargo, departamento);
+        porcentajePorVenta = ratio / 100;
     }
 
     @Override
@@ -21,15 +31,14 @@ public class EmpleadoComision extends Empleado {
         final double SALARIO_BASE_MAXIMO = 12500;
 
         if (salario < SALARIO_BASE_MINIMO || salario > SALARIO_BASE_MAXIMO) {
-            System.out.printf("El salario base debe estar entre %.2f y %.2f",
-                    SALARIO_BASE_MINIMO, SALARIO_BASE_MAXIMO);
-            return;
+            throw new IllegalArgumentException(String.format("El salario base debe estar entre %.2f y %.2f",
+                    SALARIO_BASE_MINIMO, SALARIO_BASE_MAXIMO));
         }
-        super.setSalario(salario);
+        this.salario = salario;
     }
 
     @Override
-    public double getSalarioNeto() {
-        return super.getSalarioNeto();
+    public double pago() {
+        return super.pago() + (porcentajePorVenta * ventaProcesada);
     }
 }

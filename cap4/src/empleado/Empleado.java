@@ -7,7 +7,7 @@ public class Empleado {
     private int id;
     protected String nombre;
     String cargo;
-    private double salario;
+    protected double salario;
     private String departamento;
     private double deducciones;
 
@@ -40,16 +40,15 @@ public class Empleado {
         return salario;
     }
 
-    public double getSalarioNeto() {
+    public double pago() {
         // Este es el salario que se le paga al empleado
         return salario - deducciones;
     }
 
     public void setSalario(double salario) {
         final double SALARIO_MINIMO_PROPIO = 10_000;
-        if (salario <= SALARIO_MINIMO_PROPIO) {
-            System.out.println("El salario no puede ser menor a: " + SALARIO_MINIMO_PROPIO);
-            return;
+        if (salario < SALARIO_MINIMO_PROPIO) {
+            throw new IllegalArgumentException("El salario no puede ser menor a: " + SALARIO_MINIMO_PROPIO);
         }
         this.salario = salario;
     }
@@ -71,11 +70,10 @@ public class Empleado {
     }
 
     // constructor
-    public Empleado(String nombre, String cargo, String departamento, double salario) {
+    public Empleado(String nombre, String cargo, String departamento) {
         this.cargo = cargo;
         this.departamento = departamento;
         this.nombre = nombre;
-        setSalario(salario);
         this.id = ++secuencia;
     }
 
