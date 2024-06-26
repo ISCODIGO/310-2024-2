@@ -1,4 +1,4 @@
-public class Main {
+public class Llamados {
     static void a() {
         b();
         System.out.println("Ejecutando A...");

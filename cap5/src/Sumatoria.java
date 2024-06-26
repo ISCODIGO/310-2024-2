@@ -27,10 +27,6 @@ public class Sumatoria {
     }
 
     public static void main(String[] args) {
-        /*suma = 0;
-        sumar(10);
-        System.out.println(suma);
-*/
         System.out.println(sumar2(3));
     }
 }
