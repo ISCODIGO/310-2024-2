@@ -30,32 +30,37 @@ public class Laberinto {
         }
 
         // Esta celda ya fue visitada antes
-        if (mapa[fila][col] == '.') {
+        if (mapa[fila][col] == '_') {
             return false;
         }
 
         // Marco la celda como visitada
-        mapa[fila][col] = '.';
+        mapa[fila][col] = '_';
 
         // Caso recursivo: Hago los movimientos
+
+        // Adelante
         if (resolver(fila, col + 1)) {
             return true;
         }
 
+        // Abajo
         if (resolver(fila + 1, col)) {
             return true;
         }
 
+        // Atras
         if (resolver(fila, col - 1)) {
             return true;
         }
 
+        // Arriba
         if (resolver(fila - 1, col)) {
             return true;
         }
 
         // Ocurre la vuelta atras
-        mapa[fila][col] = '#';
+        mapa[fila][col] = '=';
         return false;
     }
 
