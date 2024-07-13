@@ -14,10 +14,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int[] data = randomArr(10, 100);
+        int[] data = randomArr(1000, 100);
+        //int[] data = {59, 32, 84, 80, 60, 6, 44, 42, 75, 22};
 
         System.out.println("Datos desordenados: " + Arrays.toString(data));
-        SelectionSort.sort(data);
+        BubbleSort.sort2(data);
         System.out.println("Datos ordenados: " + Arrays.toString(data));
+        System.out.println(BubbleSort.instrucciones);
     }
 }

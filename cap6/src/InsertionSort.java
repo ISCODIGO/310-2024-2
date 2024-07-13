@@ -3,14 +3,14 @@ public class InsertionSort {
         int n = arr.length;
 
         for (int i = 1; i < n; ++i) {
-            int key = arr[i];
-            int j = i - 1;
+            int right = arr[i];
+            int left = i - 1;
 
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
+            while (left >= 0 && arr[left] > right) {
+                arr[left + 1] = arr[left];
+                left = left - 1;
             }
-            arr[j + 1] = key;
+            arr[left + 1] = right;
         }
     }
 }
