@@ -1,7 +1,8 @@
 package lista;
 
+import java.util.Iterator;
 
-public class ListaEnlazada<T> implements Lista<T> {
+public class ListaEnlazada<T> {
     private Nodo<T> primero;
     private Nodo<T> ultimo;
     private int conteo;
@@ -10,52 +11,124 @@ public class ListaEnlazada<T> implements Lista<T> {
         limpiar();
     }
 
-    @Override
-    public boolean insertar(T dato, int posAnterior) {
-        if (estaVacio()) return insertarInicio(dato);
-        Nodo<T> previo = getNodo(posAnterior);
-    }
+    public boolean insertar(T dato, int posicion) {
+        if (posicion < 0 || posicion >= conteo) {
+            throw new IndexOutOfBoundsException("Posición fuera de rango");
+        }
 
-    @Override
-    public boolean insertarInicio(T dato) {
-        var nuevo = new Nodo<T>(dato);
+        if (posicion == 0)
+            return insertarPrimero(dato);
+        if (posicion == conteo - 1)
+            return insertarUltimo(dato);
 
-        if (estaVacio()) {
-            this.primero = nuevo;
-            this.ultimo = nuevo;
-        } else {
-            nuevo.setEnlace(primero);
-            primero = nuevo;
+        // insertar enmedio
+        var nuevo = new Nodo<>(dato);
+        Nodo<T> previo = getNodo(posicion - 1);
+        nuevo.setSiguiente(previo.getSiguiente());
+        previo.setSiguiente(nuevo);
+
+        if (previo == ultimo) {
+            ultimo = nuevo;
         }
         conteo++;
         return true;
     }
 
-    @Override
+    public boolean insertarPrimero(T dato) {
+        var nuevo = new Nodo<T>(dato);
+        nuevo.setSiguiente(primero);
+        primero = nuevo;
+        conteo++;
+
+        // si es el primer nodo de la lista
+        if (conteo == 1) {
+            ultimo = nuevo;
+        }
+        return true;
+    }
+
+    public boolean insertarUltimo(T dato) {
+        var nuevo = new Nodo<T>(dato);
+        if (estaVacio()) {
+            primero = nuevo;
+            ultimo = nuevo;
+        } else {
+            ultimo.setSiguiente(nuevo);
+            ultimo = nuevo;
+        }
+        conteo++;
+        return true;
+    }
+
     public int buscar(T dato) {
-        return 0;
+        int posicion = 0;
+        Nodo<T> aux = primero;
+
+        while (aux != null) {
+            if (aux.getDato().equals(dato)) {
+                return posicion;
+            }
+            aux = aux.getSiguiente();
+            posicion++;
+        }
+        return -1; // Dato no encontrado
     }
 
-    @Override
     public T remover(int posicion) {
-        return null;
+        if (posicion < 0 || posicion >= conteo) {
+            throw new IndexOutOfBoundsException("Posición fuera de rango");
+        }
+
+        T aux;
+
+        if (estaVacio()) {
+            throw new IndexOutOfBoundsException("La lista está vacía");
+        }
+
+        if (posicion == 0) {
+            aux = removerPrimero();
+        } else if (posicion == conteo - 1) {
+            aux = removerUltimo();
+        } else {
+            var previo = getNodo(posicion - 1);
+            aux = previo.getSiguiente().getDato();
+            previo.setSiguiente(previo.getSiguiente().getSiguiente());
+        }
+
+        conteo--;
+        return aux;
     }
 
-    @Override
+    public T removerPrimero() {
+        T aux = primero.getDato();
+        primero = primero.getSiguiente();
+        return aux;
+    }
+
+    public T removerUltimo() {
+        var penultimo = getNodo(conteo - 2);
+        T aux = ultimo.getDato();
+        penultimo.setSiguiente(null);
+        ultimo = penultimo;
+        return aux;
+    }
+
     public void editar(T dato, int posicion) {
-
+        if (posicion < 0 || posicion >= conteo) {
+            throw new IndexOutOfBoundsException("Posición fuera de rango");
+        }
+        Nodo<T> nodo = getNodo(posicion);
+        nodo.setDato(dato);
     }
 
-    @Override
     public void limpiar() {
         primero = null;
         ultimo = null;
         conteo = 0;
     }
 
-    @Override
     public boolean estaVacio() {
-        return this.primero == null;
+        return primero == null;
     }
 
     public Nodo<T> getPrimero() {
@@ -79,12 +152,29 @@ public class ListaEnlazada<T> implements Lista<T> {
     }
 
     public Nodo<T> getNodo(int posicion) {
-        if (posicion == 0) return primero;
-        if (posicion == this.length() - 1) return ultimo;
+        if (posicion < 0 || posicion >= conteo) {
+            throw new IndexOutOfBoundsException("Posición fuera de rango");
+        }
+
         Nodo<T> aux = primero;
-        for(int i = 1; i <= posicion; i++) {
-            aux = aux.getEnlace();
+        for (int i = 0; i < posicion; i++) {
+            aux = aux.getSiguiente();
         }
         return aux;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        // recorrer todos los nodos
+        var aux = primero;
+        while(aux != null) {
+            sb.append(aux.getDato());
+            sb.append("-> ");
+            aux = aux.getSiguiente();
+        }
+
+        return sb.toString().strip();
     }
 }

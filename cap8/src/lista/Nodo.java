@@ -2,11 +2,11 @@ package lista;
 
 public class Nodo<T> {
     private T dato;
-    private Nodo<T> enlace;
+    private Nodo<T> siguiente;
 
     public Nodo(T dato) {
         setDato(dato);
-        setEnlace(null);
+        setSiguiente(null);
     }
 
     @Override
@@ -22,11 +22,11 @@ public class Nodo<T> {
         this.dato = dato;
     }
 
-    public Nodo<T> getEnlace() {
-        return enlace;
+    public Nodo<T> getSiguiente() {
+        return siguiente;
     }
 
-    public void setEnlace(Nodo<T> enlace) {
-        this.enlace = enlace;
+    public void setSiguiente(Nodo<T> siguiente) {
+        this.siguiente = siguiente;
     }
 }
