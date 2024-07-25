@@ -1,6 +1,4 @@
-package lista;
-
-import java.util.Iterator;
+package org.example;
 
 public class ListaEnlazada<T> {
     private Nodo<T> primero;
