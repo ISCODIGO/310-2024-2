@@ -1,4 +1,4 @@
-package org.example;
+package org.example.def;
 
 public interface Pila<T> {
     void push(T dato);

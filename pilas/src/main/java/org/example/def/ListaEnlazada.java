@@ -1,4 +1,4 @@
-package org.example;
+package org.example.def;
 
 public class ListaEnlazada<T> {
     private Nodo<T> primero;

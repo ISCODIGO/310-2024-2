@@ -1,4 +1,4 @@
-package org.example;
+package org.example.def;
 
 public class Nodo<T> {
     private T dato;
